@@ -13,10 +13,10 @@ export default function FooterSection() {
     ]
 
     const linksData2 = [
-        { href: '$', name: 'Resources', },
-        { href: '$', name: 'Blog', },
-        { href: '$', name: 'Newsletter', },
-        { href: '$', name: 'Support', },
+        { href: '', name: 'Resources', },
+        { href: '', name: 'Blog', },
+        { href: '', name: 'Newsletter', },
+        { href: '', name: 'Support', },
     ]
     return (
         <div className='flex flex-col gap-16 my-20 mx-8 md:mx-10 lg:mx-20'>
