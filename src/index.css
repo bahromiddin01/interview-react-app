@@ -1,13 +1,74 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes rightToLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes leftToRight {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@layer components {
+  body {
+    @apply 4xl:container mx-auto lg:bg-customCream
+  }
+
+  h2 {
+    @apply text-lg md:text-3xl lg:text-5xl font-medium font-roboto
+  }
+
+  .logos::before {
+    @apply absolute top-0 left-0 z-10;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), #F9F8F5);
+    content: "";
+  }
+
+  .logos::after {
+    @apply absolute top-0 right-0 z-10;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), #F9F8F5);
+    content: "";
+  }
+
+  .logoSlide {
+    animation: 10s rightToLeft infinite linear;
+  }
+
+  .logoSlide:hover {
+    animation-play-state: paused;
+  }
+}
+
+.rightToLeft {
+  animation: 50s rightToLeft infinite linear;
+}
+
+.leftToRight {
+  animation: 50s leftToRight infinite linear;
 }
