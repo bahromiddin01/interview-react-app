@@ -33,7 +33,7 @@
 
 @layer components {
   body {
-    @apply 4xl:container mx-auto lg:bg-customCream
+    @apply mx-auto lg:bg-customCream
   }
 
   h2 {

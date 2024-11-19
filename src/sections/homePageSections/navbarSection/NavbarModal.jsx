@@ -5,7 +5,7 @@ import PrimaryButton from '../../../components/PrimaryButton'
 export default function NavbarModal({ open }) {
 
     return (
-        <div className={'flex flex-col justify-start items-center gap-12 z-50 fixed top-[74px] left-0 w-full h-full bg-white duration-300 ' + (open ? "" : "-translate-x-[100%]")}>
+        <div className={'flex flex-col justify-start items-center gap-12 z-50 fixed top-[74px] left-0 w-full h-full bg-white duration-300 4xl:container ' + (open ? "" : "-translate-x-[100%]")}>
             
             <div className='flex flex-col justify-around h-full w-full md:px-40 px-8 pb-8'>
 

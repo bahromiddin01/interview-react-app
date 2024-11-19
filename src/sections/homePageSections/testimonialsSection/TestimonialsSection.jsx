@@ -30,31 +30,30 @@ export default function TestimonialsSection() {
     const testimonialsDataList = [...testimonialsData, ...testimonialsData, ...testimonialsData]
 
     return (
-        <div id='testimonials' className='flex flex-col gap-6 md:gap-12 my-20'>
-            <div className='px-8 md:px-12 xl:px-16'>
-                <h3 className='md:text-3xl xl:text-4xl font-medium font-roboto tracking-tight max-w-60 md:max-w-md xl:max-w-lg'>Here's what our customers have been saying</h3>
-            </div>
-
-            <div className='flex flex-col gap-3 md:gap-6'>
-                <div className='flex gap-2 md:gap-4 overflow-hidden'>
-                    <div className='flex gap-2 md:gap-4 w-fit rightToLeft'>
-                        {testimonialsDataList.map((data, index) => <TestimonialsCard imageUrl={data.image} name={data.name} job={data.job} comment={data.comment} key={index} />)}
+        <div className='4xl:container mx-auto'>
+            <div id='testimonials' className='flex flex-col gap-6 md:gap-12 my-20'>
+                <div className='px-8 md:px-12 xl:px-16'>
+                    <h3 className='md:text-3xl xl:text-4xl font-medium font-roboto tracking-tight max-w-60 md:max-w-md xl:max-w-lg'>Here's what our customers have been saying</h3>
+                </div>
+                <div className='flex flex-col gap-3 md:gap-6'>
+                    <div className='flex gap-2 md:gap-4 overflow-hidden'>
+                        <div className='flex gap-2 md:gap-4 w-fit rightToLeft'>
+                            {testimonialsDataList.map((data, index) => <TestimonialsCard imageUrl={data.image} name={data.name} job={data.job} comment={data.comment} key={index} />)}
+                        </div>
+                        <div className='flex gap-2 md:gap-4 w-fit rightToLeft'>
+                            {testimonialsDataList.map((data, index) => <TestimonialsCard imageUrl={data.image} name={data.name} job={data.job} comment={data.comment} key={index} />)}
+                        </div>
                     </div>
-                    <div className='flex gap-2 md:gap-4 w-fit rightToLeft'>
-                        {testimonialsDataList.map((data, index) => <TestimonialsCard imageUrl={data.image} name={data.name} job={data.job} comment={data.comment} key={index} />)}
+                    <div className='flex gap-2 md:gap-4 overflow-hidden'>
+                        <div className='flex gap-2 md:gap-4 w-fit leftToRight'>
+                            {testimonialsDataList.map((data, index) => <TestimonialsCard imageUrl={data.image} name={data.name} job={data.job} comment={data.comment} key={index} />)}
+                        </div>
+                        <div className='flex gap-2 md:gap-4 w-fit leftToRight'>
+                            {testimonialsDataList.map((data, index) => <TestimonialsCard imageUrl={data.image} name={data.name} job={data.job} comment={data.comment} key={index} />)}
+                        </div>
                     </div>
                 </div>
-
-                <div className='flex gap-2 md:gap-4 overflow-hidden'>
-                    <div className='flex gap-2 md:gap-4 w-fit leftToRight'>
-                        {testimonialsDataList.map((data, index) => <TestimonialsCard imageUrl={data.image} name={data.name} job={data.job} comment={data.comment} key={index} />)}
-                    </div>
-                    <div className='flex gap-2 md:gap-4 w-fit leftToRight'>
-                        {testimonialsDataList.map((data, index) => <TestimonialsCard imageUrl={data.image} name={data.name} job={data.job} comment={data.comment} key={index} />)}
-                    </div>
-                </div>
             </div>
-
         </div>
     )
 }

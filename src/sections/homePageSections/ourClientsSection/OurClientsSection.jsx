@@ -33,11 +33,12 @@ export default function OurClientsSection() {
         { src: logoDropbox },
     ]
     return (
-        <div className='flex flex-col items-center gap-8 md:gap-16 px-4 sm:px-12 my-20'>
-            <h2 className='max-w-3xl text-center'>Our clients Have landed jobs from top companies in the world</h2>
-            
-            <div className='flex flex-wrap justify-center gap-6 md:gap-12  max-w-5xl'>
-                {logosData.map((img, index) => <OurClientsLogos imgSrc={img.src} key={index} />)}
+        <div className='4xl:container mx-auto'>
+            <div className='flex flex-col items-center gap-8 md:gap-16 px-4 sm:px-12 my-20'>
+                <h2 className='max-w-3xl text-center'>Our clients Have landed jobs from top companies in the world</h2>
+                <div className='flex flex-wrap justify-center gap-6 md:gap-12  max-w-5xl'>
+                    {logosData.map((img, index) => <OurClientsLogos imgSrc={img.src} key={index} />)}
+                </div>
             </div>
         </div>
     )

@@ -27,10 +27,12 @@ export default function FaqSection() {
     ]
 
     return (
-        <div id='faq' className='flex flex-col gap-10 my-20 max-h-[450px]'>
-            <h3 className='text-base md:text-xl lg:text-3xl font-medium font-roboto text-center'>Frequently Asked Questions</h3>
-            <div className='space-y-6 mx-8 md:mx-16 lg:mx-36'>
-                {faqData.map((data, index) => <FaqQuestion question={data.question} answer={data.answer} key={index} />)}
+        <div className='4xl:container mx-auto'>
+            <div id='faq' className='flex flex-col gap-10 my-20 max-h-[450px]'>
+                <h3 className='text-base md:text-xl lg:text-3xl font-medium font-roboto text-center'>Frequently Asked Questions</h3>
+                <div className='space-y-6 mx-8 md:mx-16 lg:mx-36'>
+                    {faqData.map((data, index) => <FaqQuestion question={data.question} answer={data.answer} key={index} />)}
+                </div>
             </div>
         </div>
     )
