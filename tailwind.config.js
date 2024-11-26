@@ -15,6 +15,7 @@ module.exports = {
         'fadedWhite': '#FFFFFFE5',
         'customCream': '#F9F8F5',
         'customGray': '#F4F2F0',
+        'darkGray': '#475467',
       },
       screens: {
         '4xl': '1600px',
@@ -22,9 +23,6 @@ module.exports = {
       fontSize: {
         '2xs': '8px',
       },
-      boxShadow: {
-        'bottomShadow': '0 15px 20px rgba(0, 0, 0, 0.15)',
-      }
     },
   },
   plugins: [],
