@@ -69,7 +69,7 @@ export default function SignUpPage() {
     }
 
     return (
-        <div className='flex justify-between'>
+        <div className='flex justify-between 4xl:container mx-auto'>
             <div className='flex flex-col gap-4 p-4 w-full'>
                 <div className='flex items-center gap-2'>
                     <img src={logo} alt="LogoImage" />
@@ -134,7 +134,7 @@ export default function SignUpPage() {
                         </div>
                     </form>
                     <button className='flex items-center justify-center gap-2 md:px-8 md:py-3 px-6 py-2 rounded-full border border-gray-300 hover:border-gray-400'>
-                        <img src={googleIcon} alt="GoogleIcon" />
+                        <img className='w-4 md:w-auto' src={googleIcon} alt="GoogleIcon" />
                         <p className='text-xs md:text-base font-semibold font-inter'>Sign up with Google</p>
                     </button>
                     <div className='flex gap-2 justify-center'>
@@ -147,7 +147,7 @@ export default function SignUpPage() {
                     <a href="$" className='text-sm font-normal font-inter text-darkGray'>help@interviewpro.com</a>
                 </div>
             </div>
-            <div className='h-screen w-[1100px relative'>
+            <div className='h-screen w-[1100px] relative hidden lg:block'>
                 <p className='absolute text-4xl bottom-0 p-10 font-medium font-inter text-white'>"InterviewPro's tailored feedback refined my skills. Highly recommend for acing tech interviews."</p>
                 <img className='w-[1100px] h-screen rounded-l-[60px] object-cover' src={mainImage} alt="MainImage" />
             </div>
