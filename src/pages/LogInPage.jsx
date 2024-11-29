@@ -37,26 +37,6 @@ export default function LogInPage() {
     const handleSignIn = async () => {
         try {
 
-            const session = supabase.auth.session();
-            const token = session?.access_token;
-
-            if (!token) {
-                console.error('Token mavjud emas');
-                return;
-            }
-            console.log('Access Token:', token);
-
-
-            const response = await fetch('YOUR_API_ENDPOINT', {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            const data = await response.json();
-            console.log(data);
-
-
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
@@ -109,7 +89,7 @@ export default function LogInPage() {
                                     onChange={e => setPassword(e.target.value)}
                                     className='px-3 w-full py-2 rounded-lg border outline-none focus:border-gray-300' />
                                 <button className='absolute right-6' type='button'>
-                                    <i className={`fa-solid fa-eye px-1.5 py-1 text-gray-400 ${showIcon ? '' : 'hidden' }`} onClick={() => setShowIcon(!showIcon)}></i>
+                                    <i className={`fa-solid fa-eye px-1.5 py-1 text-gray-400 ${showIcon ? '' : 'hidden'}`} onClick={() => setShowIcon(!showIcon)}></i>
                                     <i className={`fa-solid fa-eye-slash px-1.5 py-1 text-gray-400 ${showIcon ? 'hidden' : ''}`} onClick={() => setShowIcon(!showIcon)}></i>
                                 </button>
                             </div>
