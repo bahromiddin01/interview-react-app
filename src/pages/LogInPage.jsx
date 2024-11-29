@@ -36,13 +36,10 @@ export default function LogInPage() {
 
     const handleSignIn = async () => {
         try {
-
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: process.env.NODE_ENV === 'production'
-                        ? 'https://interview-react-app-beta.vercel.app'
-                        : 'http://localhost:3000'
+                    redirectTo: window.location.origin
                 }
             })
 
