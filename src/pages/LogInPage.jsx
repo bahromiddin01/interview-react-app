@@ -40,7 +40,9 @@ export default function LogInPage() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: 'https://interview-react-app-beta.vercel.app/'
+                    redirectTo: process.env.NODE_ENV === 'production' 
+                        ? 'https://interview-react-app-beta.vercel.app'
+                        : 'http://localhost:5173'
                 }
             })
 
@@ -116,7 +118,7 @@ export default function LogInPage() {
                     </div>
                 </div>
                 <div className='flex justify-between'>
-                    <p className='text-sm font-normal font-inter text-darkGray'>© Interviewpro 2024</p>
+                    <p className='text-sm font-normal font-inter text-darkGray'> Interviewpro 2024</p>
                     <a href="$" className='text-sm font-normal font-inter text-darkGray'>help@interviewpro.com</a>
                 </div>
             </div>
