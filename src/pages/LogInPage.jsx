@@ -26,7 +26,7 @@ export default function LogInPage() {
                 setErrorMessage(error.message, 'xatolik chiqdi')
             } else {
                 console.log('Login successfully:', data)
-                navigate('/')
+                navigate('https://interview-react-app-beta.vercel.app')
             }
         } catch (error) {
             console.error('Error:', error.message)
