@@ -1,7 +1,11 @@
 import React from 'react'
 import PrimaryButton from '../../../components/PrimaryButton'
+import { useNavigate } from 'react-router-dom'
 
 export default function HowItWorksCards({ title, description, imgSrc, imgAlt }) {
+
+    const navigate = useNavigate()
+
     return (
         <div className='flex flex-col md:flex-row gap-16 items-center justify-between bg-white border border-gray-300 p-4 md:p-8 rounded-3xl'>
 
@@ -9,7 +13,7 @@ export default function HowItWorksCards({ title, description, imgSrc, imgAlt }) 
                 <h3 className='text-xl md:text-2xl xl:text-4xl font-medium font-inter tracking-tighter text-secondaryGreen'>{title}</h3>
                 <p className='text-sm md:text-sm xl:text-2xl font-normal font-inter text-gray-600'>{description}</p>
                 <div>
-                    <PrimaryButton buttonName={'Apply now'} />
+                    <PrimaryButton buttonName={'Apply now'} onClick={() => navigate('/signup')} />
                 </div>
             </div>
 

@@ -28,6 +28,7 @@ export default function HeaderLogoContainer() {
                     {logoList.map((image, index) => <HeaderBrandLogos imageSrc={image.src} imageAlt={image.alt} key={index} />)}
                 </div>
             </div>
+
         </div>
     )
 }

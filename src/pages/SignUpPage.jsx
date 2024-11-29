@@ -6,9 +6,7 @@ import PrimaryButton from '../components/PrimaryButton'
 import { supabase } from '../supabase/supabase'
 import { useNavigate } from 'react-router-dom'
 
-
 export default function SignUpPage() {
-
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -18,12 +16,7 @@ export default function SignUpPage() {
         password: '',
     })
 
-    const [text, setText] = useState('')
     const [showError, setShowError] = useState(false)
-
-    const handleInputText = e => {
-        setText(e.target.value)
-    }
 
     const handleInputChange = e => {
         const value = e.target.value
@@ -36,37 +29,52 @@ export default function SignUpPage() {
     const handleSubmit = async e => {
         e.preventDefault()
 
-        const hasError = text.length < 8
-        setShowError(hasError)
-
-        if (hasError) {
-            return;
+        if (formData.password.length < 8) {
+            setShowError(true)
+            return
         }
 
         try {
             const { error } = await supabase
                 .from('Sign up')
-                .insert([
-                    {
-                        name: formData.name,
-                        email: formData.email,
-                        linkedinUrl: formData.linkedinUrl,
-                        password: formData.password,
-                    }
-                ])
+                .insert([formData])
 
             if (error) {
                 console.error('Error:', error.message)
+                alert('Error creating account: ' + error.message)
             } else {
                 console.log('Data added:', formData)
+                navigate('/')
                 alert('Account created successfully!')
-                e.target.reset()
-                setText('')
+                setFormData({
+                    name: '',
+                    email: '',
+                    linkedinUrl: '',
+                    password: '',
+                })
+                setShowError(false)
             }
         } catch (error) {
             console.error('Unexpected error:', error.message)
+            alert('An unexpected error occurred')
         }
     }
+
+    const handleSignIn = async () => {
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin
+                },
+            });
+
+            if (error) throw error;
+        } catch (err) {
+            console.error('Sign-In Error:', err.message);
+            alert('Error signing in.');
+        }
+    };
 
     return (
         <div className='flex justify-between 4xl:container mx-auto'>
@@ -88,6 +96,7 @@ export default function SignUpPage() {
                                 id='name'
                                 placeholder='Enter your name'
                                 required
+                                value={formData.name}
                                 className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300'
                                 onChange={handleInputChange} />
                         </div>
@@ -98,6 +107,7 @@ export default function SignUpPage() {
                                 id='email'
                                 placeholder='Enter your email'
                                 required
+                                value={formData.email}
                                 className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300'
                                 onChange={handleInputChange} />
                         </div>
@@ -108,6 +118,7 @@ export default function SignUpPage() {
                                 id='linkedinUrl'
                                 placeholder='Enter your Linkedin URL'
                                 required
+                                value={formData.linkedinUrl}
                                 className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300'
                                 onChange={handleInputChange} />
                         </div>
@@ -118,14 +129,10 @@ export default function SignUpPage() {
                                 id='password'
                                 placeholder='Create a password'
                                 required
-                                value={text}
+                                value={formData.password}
                                 className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300'
-                                onChange={(e) => {
-                                    handleInputText(e)
-                                    handleInputChange(e)
-                                }} />
-                            <p
-                                className={`text-sm font-normal font-inter text-darkGray ${showError ? 'text-red-600' : ''}`}>
+                                onChange={handleInputChange} />
+                            <p className={`text-sm font-normal font-inter text-darkGray ${showError ? 'text-red-600' : ''}`}>
                                 Must be at least 8 characters.
                             </p>
                         </div>
@@ -133,7 +140,7 @@ export default function SignUpPage() {
                             <PrimaryButton buttonName={'Create account'} type='submit' />
                         </div>
                     </form>
-                    <button className='flex items-center justify-center gap-2 md:px-8 md:py-3 px-6 py-2 rounded-full border border-gray-300 hover:border-gray-400'>
+                    <button onClick={handleSignIn} className='flex items-center justify-center gap-2 md:px-8 md:py-3 px-6 py-2 rounded-full border border-gray-300 hover:border-gray-400'>
                         <img className='w-4 md:w-auto' src={googleIcon} alt="GoogleIcon" />
                         <p className='text-xs md:text-base font-semibold font-inter'>Sign up with Google</p>
                     </button>
@@ -143,7 +150,7 @@ export default function SignUpPage() {
                     </div>
                 </div>
                 <div className='flex justify-between'>
-                    <p className='text-sm font-normal font-inter text-darkGray'>© Interviewpro 2024</p>
+                    <p className='text-sm font-normal font-inter text-darkGray'> Interviewpro 2024</p>
                     <a href="$" className='text-sm font-normal font-inter text-darkGray'>help@interviewpro.com</a>
                 </div>
             </div>

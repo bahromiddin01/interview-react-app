@@ -13,7 +13,7 @@ export default function NavbarSection() {
     const navigate = useNavigate()
 
     return (
-        <div className='top-0 z-50 bg-white lg:bg-customCream'>
+        <div className='sticky lg:relative top-0 z-50 bg-white lg:bg-customCream'>
             <div className='4xl:container mx-auto'>
                 <div className='flex items-center justify-between lg:px-16 4xl:container'>
                     <div className='flex items-center justify-between w-full lg:w-fit lg:gap-12 px-10 md:px-16 lg:px-0 lg:border-none border-b py-4 border-b-gray-200'>
@@ -30,7 +30,7 @@ export default function NavbarSection() {
                     </div>
                     <div className='hidden lg:flex gap-6'>
                         <button className='text-base font-medium font-inter hover:text-green-700' onClick={() => navigate('/login')}>Log in</button>
-                        <PrimaryButton buttonName={'Apply now'} />
+                        <PrimaryButton buttonName={'Apply now'} onClick={() => navigate('/signup')} />
                     </div>
                 </div>
                 <NavbarModal open={isOpen} />

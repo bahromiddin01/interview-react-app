@@ -1,13 +1,77 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PrimaryButton from '../components/PrimaryButton'
 import logo from '../assets/images/logo.svg'
 import googleIcon from '../assets/images/googleIcon.svg'
 import mainImage from '../assets/images/signUpMainImage.jpeg'
 import { useNavigate } from 'react-router-dom'
+import { supabase } from '../supabase/supabase'
 
 export default function LogInPage() {
 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
     const navigate = useNavigate()
+
+    const handleLogin = async e => {
+        e.preventDefault()
+
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+            })
+
+            if (error) {
+                setErrorMessage(error.message, 'xatolik chiqdi')
+            } else {
+                console.log('Login successfully:', data)
+                navigate('/')
+            }
+        } catch (error) {
+            console.error('Error:', error.message)
+            setErrorMessage('Serverda xatolik yuz berdi. Iltimos qayta urinib koring.')
+        }
+    }
+
+    const handleSignIn = async () => {
+        try {
+
+            const session = supabase.auth.session();
+            const token = session?.access_token;
+
+            if (!token) {
+                console.error('Token mavjud emas');
+                return;
+            }
+            console.log('Access Token:', token);
+
+
+            const response = await fetch('YOUR_API_ENDPOINT', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            const data = await response.json();
+            console.log(data);
+
+
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin
+                }
+            })
+
+            if (error) throw error
+        } catch (err) {
+            console.error('Sign in Error:', err.message)
+            alert('Error sign in')
+        }
+    }
+
+    const [showIcon, setShowIcon] = useState(false)
 
     return (
         <div className='lg:flex justify-between 4xl:container mx-auto'>
@@ -21,7 +85,7 @@ export default function LogInPage() {
                         <h3 className='text-3xl font-semibold font-inter'>Log in</h3>
                         <p className='text-base font-normal font-inter text-darkGray'>Welcome back! Please enter your details.</p>
                     </div>
-                    <form className='flex flex-col gap-2'>
+                    <form className='flex flex-col gap-2' onSubmit={handleLogin}>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="email" className='text-sm font-medium font-inter'>Email</label>
                             <input
@@ -29,29 +93,40 @@ export default function LogInPage() {
                                 id='email'
                                 placeholder='Enter your email'
                                 required
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
                                 className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300' />
                         </div>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="password" className='text-sm font-medium font-inter'>Password</label>
-                            <input
-                                type="password"
-                                id='password'
-                                placeholder='..........................'
-                                required
-                                className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300' />
+                            <div className='relative flex items-center'>
+                                <input
+                                    type={`${showIcon ? 'text' : 'password'}`}
+                                    id='password'
+                                    placeholder='..........................'
+                                    required
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    className='px-3 w-full py-2 rounded-lg border outline-none focus:border-gray-300' />
+                                <button className='absolute right-6' type='button'>
+                                    <i className={`fa-solid fa-eye px-1.5 py-1 text-gray-400 ${showIcon ? '' : 'hidden' }`} onClick={() => setShowIcon(!showIcon)}></i>
+                                    <i className={`fa-solid fa-eye-slash px-1.5 py-1 text-gray-400 ${showIcon ? 'hidden' : ''}`} onClick={() => setShowIcon(!showIcon)}></i>
+                                </button>
+                            </div>
                         </div>
                         <div className='flex gap-2 justify-between'>
                             <div className='flex items-center gap-2'>
                                 <input type="checkbox" id='rememberMe' />
                                 <label htmlFor='rememberMe' className='text-sm font-normal font-inter text-darkGray'>Remember me</label>
                             </div>
-                            <button className='text-sm font-semibold font-inter text-primaryGreen hover:text-green-700'>Forgot password</button>
+                            <button type='button' className='text-sm font-semibold font-inter text-primaryGreen hover:text-green-700'>Forgot password</button>
                         </div>
                         <div className='flex flex-col gap-4 mt-4'>
                             <PrimaryButton buttonName={'Sign in'} type='submit' className='mt-4' />
                         </div>
                     </form>
-                    <button className='flex items-center justify-center gap-2 md:px-8 md:py-3 px-6 py-2 rounded-full border border-gray-300 hover:border-gray-400'>
+                    {errorMessage && <p className='text-red-600'>{errorMessage}</p>}
+                    <button onClick={handleSignIn} className='flex items-center justify-center gap-2 md:px-8 md:py-3 px-6 py-2 rounded-full border border-gray-300 hover:border-gray-400'>
                         <img className='w-4 md:w-auto' src={googleIcon} alt="GoogleIcon" />
                         <p className='text-xs md:text-base font-semibold font-inter'>Sign in with Google</p>
                     </button>
