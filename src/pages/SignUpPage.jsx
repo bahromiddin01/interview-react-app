@@ -67,7 +67,7 @@ export default function SignUpPage() {
                 options: {
                     redirectTo: process.env.NODE_ENV === 'production' 
                         ? 'https://interview-react-app-beta.vercel.app'
-                        : 'http://localhost:5173'
+                        : 'http://localhost:3000'
                 },
             });
 

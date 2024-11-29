@@ -18,15 +18,15 @@ export default function LogInPage() {
 
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
-                email: email,
-                password: password,
+                email,
+                password,
             })
 
             if (error) {
                 setErrorMessage(error.message, 'xatolik chiqdi')
             } else {
                 console.log('Login successfully:', data)
-                navigate('https://interview-react-app-beta.vercel.app')
+                navigate('/')
             }
         } catch (error) {
             console.error('Error:', error.message)
@@ -40,7 +40,9 @@ export default function LogInPage() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: window.location.href = 'https://interview-react-app-beta.vercel.app'
+                    redirectTo: process.env.NODE_ENV === 'production'
+                        ? 'https://interview-react-app-beta.vercel.app'
+                        : 'http://localhost:3000'
                 }
             })
 
