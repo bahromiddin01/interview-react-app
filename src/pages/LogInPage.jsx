@@ -13,20 +13,23 @@ export default function LogInPage() {
     const [errorMessage, setErrorMessage] = useState('')
     const navigate = useNavigate()
 
+
     const handleLogin = async e => {
         e.preventDefault()
 
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email,
-                password,
+            const { error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password,
+                options: {
+                    emailRedirectTo: 'https://interview-react-app-beta.vercel.app/'
+                }
             })
 
             if (error) {
-                setErrorMessage(error.message, 'xatolik chiqdi')
+                throw error
             } else {
-                console.log('Login successfully:', data)
-                navigate('/')
+                window.location.href = 'https://interview-react-app-beta.vercel.app/'
             }
         } catch (error) {
             console.error('Error:', error.message)
@@ -64,7 +67,7 @@ export default function LogInPage() {
                         <h3 className='text-3xl font-semibold font-inter'>Log in</h3>
                         <p className='text-base font-normal font-inter text-darkGray'>Welcome back! Please enter your details.</p>
                     </div>
-                    <form className='flex flex-col gap-2' onSubmit={handleLogin}>
+                    <form className='flex flex-col gap-2'>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="email" className='text-sm font-medium font-inter'>Email</label>
                             <input
@@ -74,7 +77,7 @@ export default function LogInPage() {
                                 required
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
-                                className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300' />
+                                className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400' />
                         </div>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="password" className='text-sm font-medium font-inter'>Password</label>
@@ -86,7 +89,7 @@ export default function LogInPage() {
                                     required
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
-                                    className='px-3 w-full py-2 rounded-lg border outline-none focus:border-gray-300' />
+                                    className='px-3 w-full py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400' />
                                 <button className='absolute right-6' type='button'>
                                     <i className={`fa-solid fa-eye px-1.5 py-1 text-gray-400 ${showIcon ? '' : 'hidden'}`} onClick={() => setShowIcon(!showIcon)}></i>
                                     <i className={`fa-solid fa-eye-slash px-1.5 py-1 text-gray-400 ${showIcon ? 'hidden' : ''}`} onClick={() => setShowIcon(!showIcon)}></i>
@@ -101,7 +104,7 @@ export default function LogInPage() {
                             <button type='button' className='text-sm font-semibold font-inter text-primaryGreen hover:text-green-700'>Forgot password</button>
                         </div>
                         <div className='flex flex-col gap-4 mt-4'>
-                            <PrimaryButton buttonName={'Sign in'} type='submit' className='mt-4' />
+                            <PrimaryButton buttonName={'Sign in'} type='submit' className='mt-4' onClick={handleLogin} />
                         </div>
                     </form>
                     {errorMessage && <p className='text-red-600'>{errorMessage}</p>}

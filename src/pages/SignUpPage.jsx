@@ -12,7 +12,6 @@ export default function SignUpPage() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        linkedinUrl: '',
         password: '',
     })
 
@@ -35,16 +34,18 @@ export default function SignUpPage() {
         }
 
         try {
-            const { error } = await supabase
-                .from('Sign up')
-                .insert([formData])
+            const { data, error } = await supabase.auth.signUp({
+                email: formData.email,
+                password: formData.password,
+                options: {
+                    emailRedirectTo: 'https://interview-react-app-beta.vercel.app/',
+                }
+            })
 
             if (error) {
                 console.error('Error:', error.message)
-                alert('Error creating account: ' + error.message)
             } else {
-                console.log('Data added:', formData)
-                navigate('/')
+                console.log('Data added:', data)
                 alert('Account created successfully!')
                 setFormData({
                     name: '',
@@ -53,6 +54,7 @@ export default function SignUpPage() {
                     password: '',
                 })
                 setShowError(false)
+                window.location.href = 'https://interview-react-app-beta.vercel.app/'
             }
         } catch (error) {
             console.error('Unexpected error:', error.message)
@@ -78,7 +80,7 @@ export default function SignUpPage() {
 
     return (
         <div className='flex justify-between 4xl:container mx-auto'>
-            <div className='flex flex-col gap-4 p-4 w-full'>
+            <div className='flex flex-col justify-between h-screen p-4 w-full'>
                 <div className='flex items-center gap-2'>
                     <img src={logo} alt="LogoImage" />
                     <h4 className='text-lg font-bold font-archivo'>InterviewPro</h4>
@@ -97,7 +99,7 @@ export default function SignUpPage() {
                                 placeholder='Enter your name'
                                 required
                                 value={formData.name}
-                                className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300'
+                                className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
                                 onChange={handleInputChange} />
                         </div>
                         <div className='flex flex-col gap-1'>
@@ -108,18 +110,7 @@ export default function SignUpPage() {
                                 placeholder='Enter your email'
                                 required
                                 value={formData.email}
-                                className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300'
-                                onChange={handleInputChange} />
-                        </div>
-                        <div className='flex flex-col gap-1'>
-                            <label htmlFor="linkedinUrl" className='text-sm font-medium font-roboto'>Your Linkedin</label>
-                            <input
-                                type="text"
-                                id='linkedinUrl'
-                                placeholder='Enter your Linkedin URL'
-                                required
-                                value={formData.linkedinUrl}
-                                className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300'
+                                className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
                                 onChange={handleInputChange} />
                         </div>
                         <div className='flex flex-col gap-1'>
@@ -130,7 +121,7 @@ export default function SignUpPage() {
                                 placeholder='Create a password'
                                 required
                                 value={formData.password}
-                                className='px-3 py-2 rounded-lg border outline-none focus:border-gray-300'
+                                className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
                                 onChange={handleInputChange} />
                             <p className={`text-sm font-normal font-inter text-darkGray ${showError ? 'text-red-600' : ''}`}>
                                 Must be at least 8 characters.
@@ -149,7 +140,7 @@ export default function SignUpPage() {
                         <button className='text-sm font-semibold font-inter text-primaryGreen hover:text-green-700' onClick={() => navigate('/login')}>Log in</button>
                     </div>
                 </div>
-                <div className='flex justify-between'>
+                <div className='flex justify-between gap-4'>
                     <p className='text-sm font-normal font-inter text-darkGray'> Interviewpro 2024</p>
                     <a href="$" className='text-sm font-normal font-inter text-darkGray'>help@interviewpro.com</a>
                 </div>
