@@ -26,7 +26,7 @@ export default function LogInPage() {
             if (error) {
                 throw error
             } else {
-                navigate('/dashboard')
+                navigate('/home')
             }
         } catch (error) {
             console.error('Error:', error.message)
@@ -39,7 +39,7 @@ export default function LogInPage() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: 'https://interview-react-app-beta.vercel.app/dashboard'
+                    redirectTo: 'https://interview-react-app-beta.vercel.app/home'
                 }
             })
 
