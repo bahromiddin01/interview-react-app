@@ -9,52 +9,35 @@ import { useNavigate } from 'react-router-dom'
 export default function SignUpPage() {
     const navigate = useNavigate()
 
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-    })
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const [showError, setShowError] = useState(false)
-
-    const handleInputChange = e => {
-        const value = e.target.value
-        setFormData(prevState => ({
-            ...prevState,
-            [e.target.id]: value
-        }))
-    }
+    const [errorMessage, setErrorMessage] = useState('')
 
     const handleSubmit = async e => {
         e.preventDefault()
 
-        if (formData.password.length < 8) {
+        if (password.length < 8) {
             setShowError(true)
             return
         }
 
         try {
             const { data, error } = await supabase.auth.signUp({
-                email: formData.email,
-                password: formData.password,
-                options: {
-                    emailRedirectTo: 'https://interview-react-app-beta.vercel.app/',
-                }
+                email: email,
+                password: password,
             })
 
             if (error) {
                 console.error('Error:', error.message)
+                setErrorMessage(error.message)
             } else {
                 console.log('Data added:', data)
                 alert('Account created successfully!')
-                setFormData({
-                    name: '',
-                    email: '',
-                    linkedinUrl: '',
-                    password: '',
-                })
                 setShowError(false)
-                window.location.href = 'https://interview-react-app-beta.vercel.app/'
+                navigate('/dashboard')
             }
         } catch (error) {
             console.error('Unexpected error:', error.message)
@@ -67,11 +50,12 @@ export default function SignUpPage() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: 'https://interview-react-app-beta.vercel.app/'
-                },
+                    redirectTo: '/dashboard/'
+                }
             });
 
-            if (error) throw error;
+            if (error) throw error
+
         } catch (err) {
             console.error('Sign-In Error:', err.message);
             alert('Error signing in.');
@@ -98,9 +82,9 @@ export default function SignUpPage() {
                                 id='name'
                                 placeholder='Enter your name'
                                 required
-                                value={formData.name}
+                                value={name}
                                 className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
-                                onChange={handleInputChange} />
+                                onChange={e => setName(e.target.value)} />
                         </div>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="email" className='text-sm font-medium font-roboto'>Email*</label>
@@ -109,9 +93,9 @@ export default function SignUpPage() {
                                 id='email'
                                 placeholder='Enter your email'
                                 required
-                                value={formData.email}
+                                value={email}
                                 className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
-                                onChange={handleInputChange} />
+                                onChange={e => setEmail(e.target.value)} />
                         </div>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="password" className='text-sm font-medium font-roboto'>Password*</label>
@@ -120,14 +104,15 @@ export default function SignUpPage() {
                                 id='password'
                                 placeholder='Create a password'
                                 required
-                                value={formData.password}
+                                value={password}
                                 className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
-                                onChange={handleInputChange} />
+                                onChange={e => setPassword(e.target.value)} />
                             <p className={`text-sm font-normal font-inter text-darkGray ${showError ? 'text-red-600' : ''}`}>
                                 Must be at least 8 characters.
                             </p>
                         </div>
                         <div className='flex flex-col gap-4 mt-4'>
+                            <p className='text-red-500 font-normal text-center tracking-wider'>{errorMessage}</p>
                             <PrimaryButton buttonName={'Create account'} type='submit' />
                         </div>
                     </form>

@@ -21,15 +21,12 @@ export default function LogInPage() {
             const { error } = await supabase.auth.signInWithPassword({
                 email: email,
                 password: password,
-                options: {
-                    emailRedirectTo: 'https://interview-react-app-beta.vercel.app/'
-                }
             })
 
             if (error) {
                 throw error
             } else {
-                window.location.href = 'https://interview-react-app-beta.vercel.app/'
+                navigate('/dashboard')
             }
         } catch (error) {
             console.error('Error:', error.message)
@@ -41,12 +38,14 @@ export default function LogInPage() {
         try {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
-                options: {
-                    redirectTo: 'https://interview-react-app-beta.vercel.app/'
-                }
             })
 
-            if (error) throw error
+            if (error) {
+                throw error
+            } else {
+                navigate('/dashboard')
+            }
+
         } catch (err) {
             console.error('Sign in Error:', err.message)
             alert('Error sign in')
@@ -56,7 +55,7 @@ export default function LogInPage() {
     const [showIcon, setShowIcon] = useState(false)
 
     return (
-        <div className='lg:flex justify-between 4xl:container mx-auto'>
+        <div className='lg:flex justify-between mx-auto'>
             <div className='flex flex-col h-screen justify-between p-4 w-full'>
                 <div className='flex items-center gap-2'>
                     <img src={logo} alt="LogoImage" />
@@ -67,7 +66,7 @@ export default function LogInPage() {
                         <h3 className='text-3xl font-semibold font-inter'>Log in</h3>
                         <p className='text-base font-normal font-inter text-darkGray'>Welcome back! Please enter your details.</p>
                     </div>
-                    <form className='flex flex-col gap-2'>
+                    <form className='flex flex-col gap-2' onSubmit={handleLogin}>
                         <div className='flex flex-col gap-1'>
                             <label htmlFor="email" className='text-sm font-medium font-inter'>Email</label>
                             <input
@@ -104,7 +103,7 @@ export default function LogInPage() {
                             <button type='button' className='text-sm font-semibold font-inter text-primaryGreen hover:text-green-700'>Forgot password</button>
                         </div>
                         <div className='flex flex-col gap-4 mt-4'>
-                            <PrimaryButton buttonName={'Sign in'} type='submit' className='mt-4' onClick={handleLogin} />
+                            <PrimaryButton buttonName={'Sign in'} type='submit' className='mt-4' />
                         </div>
                     </form>
                     {errorMessage && <p className='text-red-600'>{errorMessage}</p>}
