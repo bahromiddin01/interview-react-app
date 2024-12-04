@@ -38,13 +38,13 @@ export default function LogInPage() {
         try {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
+                options: {
+                    redirectTo: 'https://interview-react-app-beta.vercel.app/dashboard'
+                }
             })
 
-            if (error) {
-                throw error
-            } else {
-                navigate('/dashboard')
-            }
+            if (error) throw error
+
 
         } catch (err) {
             console.error('Sign in Error:', err.message)
