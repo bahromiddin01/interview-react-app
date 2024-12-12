@@ -37,7 +37,6 @@ export default function SignUpPage() {
                     setErrorMessage(error.message)
                 } else {
                     console.log('Data added:', data)
-                    alert('Account created successfully!')
                     setShowError(false)
                     navigate('/dashboard')
                 }
@@ -61,7 +60,6 @@ export default function SignUpPage() {
 
         } catch (err) {
             console.error('Sign-In Error:', err.message);
-            alert('Error signing in.');
         }
     };
 

@@ -14,7 +14,6 @@ export default function DashboardPage() {
             if (error) {
                 console.error('Error:', error.message)
             } else {
-                alert('You logged out')
                 navigate('/')
             }
         } catch (error) {
