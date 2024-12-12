@@ -33,7 +33,7 @@ export default function InterviewsHistoryPage() {
                         <h4 className='text-lg font-bold font-archivo'>InterviewPro</h4>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <button onClick={() => navigate('/home')} className='flex items-center gap-3 hover:bg-green-200 py-2 px-3 rounded-md'>
+                        <button onClick={() => navigate('/dashboard')} className='flex items-center gap-3 hover:bg-green-200 py-2 px-3 rounded-md'>
                             <i className="fa-solid fa-house text-lg text-gray-500"></i>
                             <p className='text-base font-semibold font-inter'>Home</p>
                         </button>

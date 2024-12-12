@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from '../assets/images/logo.svg'
 import { supabase } from '../supabase/supabase'
 import { useNavigate } from 'react-router-dom'
@@ -8,8 +8,6 @@ export default function DashboardPage() {
     const navigate = useNavigate()
 
     const handleLogOut = async e => {
-        e.preventDefault()
-
         try {
             const { error } = await supabase.auth.signOut()
 
@@ -23,6 +21,29 @@ export default function DashboardPage() {
             console.error('Error:', error.message)
         }
     }
+
+    useEffect(() => {
+
+        const fetchUser = async () => {
+            try {
+                const { data, error } = await supabase.auth.getUser()
+
+                if (error) {
+                    console.error('Error fetching user:', error.message)
+                    navigate('/login')
+                }
+
+                if (!data.user) {
+                    navigate('/login')
+                }
+
+            } catch (error) {
+                console.error('Error:', error.message)
+                navigate('/login')
+            }
+        }
+        fetchUser()
+    }, [navigate])
 
     return (
         <div className='flex h-screen 4xl:container mx-auto'>

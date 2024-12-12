@@ -7,6 +7,7 @@ import { supabase } from '../supabase/supabase'
 import { useNavigate } from 'react-router-dom'
 
 export default function SignUpPage() {
+
     const navigate = useNavigate()
 
     const [name, setName] = useState('')
@@ -21,27 +22,29 @@ export default function SignUpPage() {
 
         if (password.length < 8) {
             setShowError(true)
-            return
-        }
+        } else {
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: { name: name }
+                    }
+                })
 
-        try {
-            const { data, error } = await supabase.auth.signUp({
-                email: email,
-                password: password,
-            })
-
-            if (error) {
-                console.error('Error:', error.message)
-                setErrorMessage(error.message)
-            } else {
-                console.log('Data added:', data)
-                alert('Account created successfully!')
-                setShowError(false)
-                navigate('/dashboard')
+                if (error) {
+                    console.error('Error sign up:', error.message)
+                    setErrorMessage(error.message)
+                } else {
+                    console.log('Data added:', data)
+                    alert('Account created successfully!')
+                    setShowError(false)
+                    navigate('/dashboard')
+                }
+            } catch (error) {
+                console.error('Unexpected error:', error.message)
+                alert('An unexpected error occurred')
             }
-        } catch (error) {
-            console.error('Unexpected error:', error.message)
-            alert('An unexpected error occurred')
         }
     }
 
@@ -50,7 +53,7 @@ export default function SignUpPage() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: 'https://interview-react-app-beta.vercel.app/home'
+                    redirectTo: 'https://interview-react-app-beta.vercel.app/dashboard'
                 }
             });
 
