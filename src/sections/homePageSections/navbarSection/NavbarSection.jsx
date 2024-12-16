@@ -64,7 +64,7 @@ export default function NavbarSection() {
                     </div>
                     {isUser
                         ? <div className='flex flex-col gap-2 items-center relative'>
-                            <button onClick={() => setShowButtons(!showButtons)} className='flex items-center gap-4 py-3 px-4 active:scale-90 transform transition hover:bg-gray-300 rounded-xl duration-200'>
+                            <button onClick={() => setShowButtons(!showButtons)} className='flex items-center gap-4 py-3 px-4 active:scale-90 transform transition hover:bg-gray-300 rounded-xl duration-75'>
                                 <i className="fa-solid fa-user text-xl"></i>
                                 <h3 className='text-xl font-light font-roboto'>{userName}</h3>
                             </button>
