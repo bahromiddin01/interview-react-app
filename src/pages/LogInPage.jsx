@@ -8,11 +8,12 @@ import { supabase } from '../supabase/supabase'
 
 export default function LogInPage() {
 
+    const navigate = useNavigate()
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
-    const navigate = useNavigate()
-
+    const [showIcon, setShowIcon] = useState(false)
 
     const handleLogin = async e => {
         e.preventDefault()
@@ -51,8 +52,6 @@ export default function LogInPage() {
             alert('Error sign in')
         }
     }
-
-    const [showIcon, setShowIcon] = useState(false)
 
     return (
         <div className='lg:flex justify-between mx-auto'>

@@ -6,12 +6,12 @@ import InterviewBookingModal from '../components/InterviewBookingModal'
 import { toast } from 'react-toastify'
 import { BookingContext } from '../context/BookingContext'
 import { UserContext } from '../context/UserContext'
+import { getUser } from '../service/user'
 
 export default function DashboardPage() {
-
     const navigate = useNavigate()
 
-    const { userName, setUserName } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
 
     const { interviewFocus, interviewType } = useContext(BookingContext)
 
@@ -26,7 +26,6 @@ export default function DashboardPage() {
     }
 
     useEffect(() => {
-
         const handleEventScheduled = async e => {
             if (e.data?.event === 'calendly.event_scheduled') {
                 const API_TOKEN = 'eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzM1MTk0NjY0LCJqdGkiOiJhMGEzN2Y2Yy1lODY0LTQ4YjktOWZkMC1iM2M2MDU1NDhjZTEiLCJ1c2VyX3V1aWQiOiJlY2E0MzE2Zi1mNzc4LTRiODUtYmI1OS05NDRlOTA4MDAyMDAifQ.vAjtIFTAwkc46fKz1JH2kwXPkaM8tfyNv-awaNIDvO87jSLhjnS4rR7nVe7ZTzJTYt-3j8UnX8yl9ZCqs8qlRQ'
@@ -57,39 +56,23 @@ export default function DashboardPage() {
         }
 
         window.addEventListener('message', handleEventScheduled)
+    }, [interviewFocus, interviewType])
 
+    useEffect(() => {
         window.addEventListener('click', e => {
             if (modalRef.current?.contains(e.target) || buttonRef.current?.contains(e.target)) return
             setIsOpen(false)
         })
 
-        const fetchUser = async () => {
-            try {
-                const { data, error } = await supabase.auth.getUser()
-
-                if (error) {
-                    console.error('Error fetching user:', error.message)
-                    navigate('/login')
-                }
-
-                if (!data.user) {
-                    navigate('/login')
-                } else {
-                    setUserName(data.user.user_metadata.name)
-                }
-
-            } catch (error) {
-                console.error('Error:', error.message)
-                navigate('/login')
-            }
-        }
-        fetchUser()
-
-        return () => {
-            window.removeEventListener('message', handleEventScheduled)
+        if (!user) {
+            navigate('/login')
         }
 
-    })
+        getUser().then(({ user }) => {
+            setUser(user)
+        })
+
+    }, [])
 
     return (
         <div>
@@ -122,7 +105,7 @@ export default function DashboardPage() {
                 </div>
                 <div className='flex flex-col flex-grow gap-8 mx-12 my-16'>
                     <div className='flex flex-col gap-3 max-w-lg'>
-                        <h3 className='font-inter font-semibold text-3xl'>Welcome back, {userName}</h3>
+                        <h3 className='font-inter font-semibold text-3xl'>Welcome back, {user?.user_metadata.name}</h3>
                         <p className='font-inter font-normal text-base text-gray-500'>Book interviews with top tech engineers, receive expert feedback, and elevate your performance.</p>
                         <div>
                             <button
