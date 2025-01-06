@@ -31,29 +31,49 @@
   }
 }
 
+.customRadioBtn::after {
+  background-color: red; /* Radio tugma tanlanganda rang o'zgaradi */
+}
+
+.customRadioBtn::after {
+  content: ''; /* Ichki doira uchun */
+  position: absolute; /* Doirani tashqi div ichida joylash */
+  width: 50%;
+  height: 50%; /* Ichki doira o'lchami */
+  top: 4.5px;
+  left: 4.5px;
+  background-color: green; /* Oddiy holatda yashil rang */
+  border-radius: 50%; /* Aylana shakl */
+  transform: scale(0); /* Bosilmaganda ko'rinmas */
+  transition: transform 0.3s, background-color 0.3s; /* Silliq animatsiya */
+}
+
+.customRadioBtn::after {
+  transform: scale(1); /* Tanlanganda ko‘rinadi */
+}
 @layer components {
   body {
-    @apply mx-auto lg:bg-customCream
+    @apply mx-auto lg:bg-customCream;
   }
 
   h2 {
-    @apply text-lg md:text-3xl lg:text-5xl font-medium font-roboto
+    @apply text-lg md:text-3xl lg:text-5xl font-medium font-roboto;
   }
 
   .logos::before {
     @apply absolute top-0 left-0 z-10;
     width: 100px;
     height: 100%;
-    background: linear-gradient(to left, rgba(255, 255, 255, 0), #F9F8F5);
-    content: "";
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), #f9f8f5);
+    content: '';
   }
 
   .logos::after {
     @apply absolute top-0 right-0 z-10;
     width: 100px;
     height: 100%;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), #F9F8F5);
-    content: "";
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), #f9f8f5);
+    content: '';
   }
 
   .logoSlide {

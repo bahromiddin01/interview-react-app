@@ -40,6 +40,7 @@ export default function SignUpPage() {
                     setShowError(false)
                     navigate('/dashboard')
                 }
+
             } catch (error) {
                 console.error('Unexpected error:', error.message)
                 alert('An unexpected error occurred')
@@ -64,76 +65,76 @@ export default function SignUpPage() {
     };
 
     return (
-        <div className='flex justify-between 4xl:container mx-auto'>
-            <div className='flex flex-col justify-between h-screen p-4 w-full'>
+        <div className='flex justify-between mx-auto 4xl:container'>
+            <div className='flex flex-col justify-between p-4 w-full h-screen'>
                 <div className='flex items-center gap-2'>
                     <img src={logo} alt="LogoImage" />
-                    <h4 className='text-lg font-bold font-archivo'>InterviewPro</h4>
+                    <h4 className='font-archivo font-bold text-lg'>InterviewPro</h4>
                 </div>
-                <div className='flex flex-col mx-auto gap-4 max-w-[360px]'>
+                <div className='flex flex-col gap-4 mx-auto max-w-[360px]'>
                     <div className='flex flex-col gap-2'>
-                        <h3 className='text-3xl font-semibold font-roboto'>Sign up</h3>
-                        <p className='text-base font-normal font-roboto text-darkGray'>Create your account and start improving your interview skills.</p>
+                        <h3 className='font-roboto font-semibold text-3xl'>Sign up</h3>
+                        <p className='font-normal font-roboto text-base text-darkGray'>Create your account and start improving your interview skills.</p>
                     </div>
                     <form className='flex flex-col gap-2' onSubmit={handleSubmit}>
                         <div className='flex flex-col gap-1'>
-                            <label htmlFor="name" className='text-sm font-medium font-roboto'>Name*</label>
+                            <label htmlFor="name" className='font-medium font-roboto text-sm'>Name*</label>
                             <input
                                 type="text"
                                 id='name'
                                 placeholder='Enter your name'
                                 required
                                 value={name}
-                                className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
+                                className='border-gray-300 focus:border-gray-400 px-3 py-2 border rounded-lg outline-none'
                                 onChange={e => setName(e.target.value)} />
                         </div>
                         <div className='flex flex-col gap-1'>
-                            <label htmlFor="email" className='text-sm font-medium font-roboto'>Email*</label>
+                            <label htmlFor="email" className='font-medium font-roboto text-sm'>Email*</label>
                             <input
                                 type="email"
                                 id='email'
                                 placeholder='Enter your email'
                                 required
                                 value={email}
-                                className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
+                                className='border-gray-300 focus:border-gray-400 px-3 py-2 border rounded-lg outline-none'
                                 onChange={e => setEmail(e.target.value)} />
                         </div>
                         <div className='flex flex-col gap-1'>
-                            <label htmlFor="password" className='text-sm font-medium font-roboto'>Password*</label>
+                            <label htmlFor="password" className='font-medium font-roboto text-sm'>Password*</label>
                             <input
                                 type="password"
                                 id='password'
                                 placeholder='Create a password'
                                 required
                                 value={password}
-                                className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400'
+                                className='border-gray-300 focus:border-gray-400 px-3 py-2 border rounded-lg outline-none'
                                 onChange={e => setPassword(e.target.value)} />
                             <p className={`text-sm font-normal font-inter text-darkGray ${showError ? 'text-red-600' : ''}`}>
                                 Must be at least 8 characters.
                             </p>
                         </div>
                         <div className='flex flex-col gap-4 mt-4'>
-                            <p className='text-red-500 font-normal text-center tracking-wider'>{errorMessage}</p>
+                            <p className='font-normal text-center text-red-500 tracking-wider'>{errorMessage}</p>
                             <PrimaryButton buttonName={'Create account'} type='submit' />
                         </div>
                     </form>
-                    <button onClick={handleSignIn} className='flex items-center justify-center gap-2 md:px-8 md:py-3 px-6 py-2 rounded-full border border-gray-300 hover:border-gray-400'>
+                    <button onClick={handleSignIn} className='flex justify-center items-center gap-2 border-gray-300 hover:border-gray-400 px-6 md:px-8 py-2 md:py-3 border rounded-full'>
                         <img className='w-4 md:w-auto' src={googleIcon} alt="GoogleIcon" />
-                        <p className='text-xs md:text-base font-semibold font-inter'>Sign up with Google</p>
+                        <p className='font-inter font-semibold text-xs md:text-base'>Sign up with Google</p>
                     </button>
-                    <div className='flex gap-2 justify-center'>
-                        <p className='text-sm font-normal font-inter text-darkGray'>Already have an account?</p>
-                        <button className='text-sm font-semibold font-inter text-primaryGreen hover:text-green-700' onClick={() => navigate('/login')}>Log in</button>
+                    <div className='flex justify-center gap-2'>
+                        <p className='font-inter font-normal text-darkGray text-sm'>Already have an account?</p>
+                        <button className='font-inter font-semibold text-primaryGreen text-sm hover:text-green-700' onClick={() => navigate('/login')}>Log in</button>
                     </div>
                 </div>
                 <div className='flex justify-between gap-4'>
-                    <p className='text-sm font-normal font-inter text-darkGray'> Interviewpro 2024</p>
-                    <a href="$" className='text-sm font-normal font-inter text-darkGray'>help@interviewpro.com</a>
+                    <p className='font-inter font-normal text-darkGray text-sm'> Interviewpro 2024</p>
+                    <a href="$" className='font-inter font-normal text-darkGray text-sm'>help@interviewpro.com</a>
                 </div>
             </div>
-            <div className='h-screen w-[1100px] relative hidden lg:block'>
-                <p className='absolute text-4xl bottom-0 p-10 font-medium font-inter text-white'>"InterviewPro's tailored feedback refined my skills. Highly recommend for acing tech interviews."</p>
-                <img className='w-[1100px] h-screen rounded-l-[60px] object-cover' src={mainImage} alt="MainImage" />
+            <div className='lg:block relative hidden w-[1100px] h-screen'>
+                <p className='bottom-0 absolute p-10 font-inter font-medium text-4xl text-white'>"InterviewPro's tailored feedback refined my skills. Highly recommend for acing tech interviews."</p>
+                <img className='rounded-l-[60px] w-[1100px] h-screen object-cover' src={mainImage} alt="MainImage" />
             </div>
         </div>
     )

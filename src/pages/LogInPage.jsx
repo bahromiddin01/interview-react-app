@@ -30,7 +30,7 @@ export default function LogInPage() {
             }
         } catch (error) {
             console.error('Error:', error.message)
-            setErrorMessage('Serverda xatolik yuz berdi. Iltimos qayta urinib koring.')
+            setErrorMessage(error.message)
         }
     }
 
@@ -56,19 +56,19 @@ export default function LogInPage() {
 
     return (
         <div className='lg:flex justify-between mx-auto'>
-            <div className='flex flex-col h-screen justify-between p-4 w-full'>
+            <div className='flex flex-col justify-between p-4 w-full h-screen'>
                 <div className='flex items-center gap-2'>
                     <img src={logo} alt="LogoImage" />
-                    <h4 className='text-lg font-bold font-archivo'>InterviewPro</h4>
+                    <h4 className='font-archivo font-bold text-lg'>InterviewPro</h4>
                 </div>
-                <div className='flex flex-col mx-auto gap-4 md:w-[480px]'>
+                <div className='flex flex-col gap-4 mx-auto md:w-[480px]'>
                     <div className='flex flex-col gap-2'>
-                        <h3 className='text-3xl font-semibold font-inter'>Log in</h3>
-                        <p className='text-base font-normal font-inter text-darkGray'>Welcome back! Please enter your details.</p>
+                        <h3 className='font-inter font-semibold text-3xl'>Log in</h3>
+                        <p className='font-inter font-normal text-base text-darkGray'>Welcome back! Please enter your details.</p>
                     </div>
                     <form className='flex flex-col gap-2' onSubmit={handleLogin}>
                         <div className='flex flex-col gap-1'>
-                            <label htmlFor="email" className='text-sm font-medium font-inter'>Email</label>
+                            <label htmlFor="email" className='font-inter font-medium text-sm'>Email</label>
                             <input
                                 type="email"
                                 id='email'
@@ -76,10 +76,10 @@ export default function LogInPage() {
                                 required
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
-                                className='px-3 py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400' />
+                                className='border-gray-300 focus:border-gray-400 px-3 py-2 border rounded-lg outline-none' />
                         </div>
                         <div className='flex flex-col gap-1'>
-                            <label htmlFor="password" className='text-sm font-medium font-inter'>Password</label>
+                            <label htmlFor="password" className='font-inter font-medium text-sm'>Password</label>
                             <div className='relative flex items-center'>
                                 <input
                                     type={`${showIcon ? 'text' : 'password'}`}
@@ -88,42 +88,42 @@ export default function LogInPage() {
                                     required
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}
-                                    className='px-3 w-full py-2 rounded-lg border border-gray-300 outline-none focus:border-gray-400' />
-                                <button className='absolute right-6' type='button'>
+                                    className='border-gray-300 focus:border-gray-400 px-3 py-2 border rounded-lg w-full outline-none' />
+                                <button className='right-6 absolute' type='button'>
                                     <i className={`fa-solid fa-eye px-1.5 py-1 text-gray-400 ${showIcon ? '' : 'hidden'}`} onClick={() => setShowIcon(!showIcon)}></i>
                                     <i className={`fa-solid fa-eye-slash px-1.5 py-1 text-gray-400 ${showIcon ? 'hidden' : ''}`} onClick={() => setShowIcon(!showIcon)}></i>
                                 </button>
                             </div>
                         </div>
-                        <div className='flex gap-2 justify-between'>
+                        <div className='flex justify-between gap-2'>
                             <div className='flex items-center gap-2'>
                                 <input type="checkbox" id='rememberMe' />
-                                <label htmlFor='rememberMe' className='text-sm font-normal font-inter text-darkGray'>Remember me</label>
+                                <label htmlFor='rememberMe' className='font-inter font-normal text-darkGray text-sm'>Remember me</label>
                             </div>
-                            <button type='button' className='text-sm font-semibold font-inter text-primaryGreen hover:text-green-700'>Forgot password</button>
+                            <button type='button' className='font-inter font-semibold text-primaryGreen text-sm hover:text-green-700'>Forgot password</button>
                         </div>
                         <div className='flex flex-col gap-4 mt-4'>
                             <PrimaryButton buttonName={'Sign in'} type='submit' className='mt-4' />
                         </div>
                     </form>
                     {errorMessage && <p className='text-red-600'>{errorMessage}</p>}
-                    <button onClick={handleSignIn} className='flex items-center justify-center gap-2 md:px-8 md:py-3 px-6 py-2 rounded-full border border-gray-300 hover:border-gray-400'>
+                    <button onClick={handleSignIn} className='flex justify-center items-center gap-2 border-gray-300 hover:border-gray-400 px-6 md:px-8 py-2 md:py-3 border rounded-full'>
                         <img className='w-4 md:w-auto' src={googleIcon} alt="GoogleIcon" />
-                        <p className='text-xs md:text-base font-semibold font-inter'>Sign in with Google</p>
+                        <p className='font-inter font-semibold text-xs md:text-base'>Sign in with Google</p>
                     </button>
                     <div className='flex justify-center gap-2 mt-6'>
-                        <p className='text-sm font-normal font-inter text-darkGray'>Don't have an account?</p>
-                        <button className='text-sm font-semibold font-inter text-primaryGreen hover:text-green-700' onClick={() => navigate('/signup')}>Sign up</button>
+                        <p className='font-inter font-normal text-darkGray text-sm'>Don't have an account?</p>
+                        <button className='font-inter font-semibold text-primaryGreen text-sm hover:text-green-700' onClick={() => navigate('/signup')}>Sign up</button>
                     </div>
                 </div>
                 <div className='flex justify-between'>
-                    <p className='text-sm font-normal font-inter text-darkGray'> Interviewpro 2024</p>
-                    <a href="$" className='text-sm font-normal font-inter text-darkGray'>help@interviewpro.com</a>
+                    <p className='font-inter font-normal text-darkGray text-sm'> Interviewpro 2024</p>
+                    <a href="$" className='font-inter font-normal text-darkGray text-sm'>help@interviewpro.com</a>
                 </div>
             </div>
-            <div className='h-screen w-[1100px relative hidden lg:block'>
-                <p className='absolute text-4xl bottom-0 p-10 font-medium font-inter text-white'>"InterviewPro's tailored feedback refined my skills. Highly recommend for acing tech interviews."</p>
-                <img className='w-[1100px] h-screen rounded-l-[60px] object-cover' src={mainImage} alt="MainImage" />
+            <div className='lg:block relative hidden w-[1100px h-screen'>
+                <p className='bottom-0 absolute p-10 font-inter font-medium text-4xl text-white'>"InterviewPro's tailored feedback refined my skills. Highly recommend for acing tech interviews."</p>
+                <img className='rounded-l-[60px] w-[1100px] h-screen object-cover' src={mainImage} alt="MainImage" />
             </div>
         </div>
     )
