@@ -5,13 +5,10 @@ import { useNavigate } from 'react-router-dom'
 import InterviewBookingModal from '../components/InterviewBookingModal'
 import { toast } from 'react-toastify'
 import { BookingContext } from '../context/BookingContext'
-import { UserContext } from '../context/UserContext'
-import { getUser } from '../service/user'
 
 export default function DashboardPage() {
     const navigate = useNavigate()
 
-    const { user, setUser } = useContext(UserContext)
 
     const { interviewFocus, interviewType } = useContext(BookingContext)
 
@@ -19,6 +16,7 @@ export default function DashboardPage() {
     const buttonRef = useRef()
 
     const [isOpen, setIsOpen] = useState(false)
+    const [userName, setUserName] = useState("")
 
     const handleLogOut = async () => {
         await supabase.auth.signOut()
@@ -55,6 +53,18 @@ export default function DashboardPage() {
             }
         }
 
+        const fetchUser = async () => {
+            const { data } = await supabase.auth.getUser()
+            console.log(data)
+            if (data.user === null) {
+                navigate('/login')
+            } else {
+                setUserName(data.user.user_metadata.name)
+            }
+        }
+
+        fetchUser()
+
         window.addEventListener('message', handleEventScheduled)
     }, [interviewFocus, interviewType])
 
@@ -62,14 +72,6 @@ export default function DashboardPage() {
         window.addEventListener('click', e => {
             if (modalRef.current?.contains(e.target) || buttonRef.current?.contains(e.target)) return
             setIsOpen(false)
-        })
-
-        if (!user) {
-            navigate('/login')
-        }
-
-        getUser().then(({ user }) => {
-            setUser(user)
         })
 
     }, [])
@@ -105,7 +107,7 @@ export default function DashboardPage() {
                 </div>
                 <div className='flex flex-col flex-grow gap-8 mx-12 my-16'>
                     <div className='flex flex-col gap-3 max-w-lg'>
-                        <h3 className='font-inter font-semibold text-3xl'>Welcome back, {user?.user_metadata.name}</h3>
+                        <h3 className='font-inter font-semibold text-3xl'>Welcome back, {userName}</h3>
                         <p className='font-inter font-normal text-base text-gray-500'>Book interviews with top tech engineers, receive expert feedback, and elevate your performance.</p>
                         <div>
                             <button
