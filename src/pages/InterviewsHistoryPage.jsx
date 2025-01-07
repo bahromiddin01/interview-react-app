@@ -44,7 +44,7 @@ export default function InterviewsHistoryPage() {
                             interview_focus: interviewFocus,
                             interviewer: interviewType,
                             calendar_time: scheduledTime.resource.start_time,
-                            type: 'interview',
+                            type: 'Mock interview',
                         }
                     ])
                 setTimeout(() => {

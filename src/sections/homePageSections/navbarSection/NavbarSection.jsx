@@ -28,7 +28,7 @@ export default function NavbarSection() {
         }
 
         fetchUser()
-    })
+    }, [])
 
     const handleLogOut = async e => {
         try {
@@ -62,7 +62,8 @@ export default function NavbarSection() {
                         </div>
                     </div>
                     {isUser
-                        ? <div className='relative flex flex-col items-center gap-2'>
+                        ?
+                        <div className='relative flex flex-col items-center gap-2'>
                             <button onClick={() => setShowButtons(!showButtons)} className='flex items-center gap-4 hover:bg-gray-300 px-4 py-3 rounded-xl transform transition duration-75 active:scale-90'>
                                 <i className="text-xl fa-solid fa-user"></i>
                                 <h3 className='font-light font-roboto text-xl'>{userName}</h3>
@@ -75,7 +76,8 @@ export default function NavbarSection() {
                                 </button>
                             </div>
                         </div>
-                        : <div className='lg:flex gap-6 hidden'>
+                        :
+                        <div className='lg:flex gap-6 hidden'>
                             <button className='font-inter font-medium text-base hover:text-green-700' onClick={() => navigate('/login')}>Log in</button>
                             <PrimaryButton buttonName={'Apply now'} onClick={() => navigate('/signup')} />
                         </div>}

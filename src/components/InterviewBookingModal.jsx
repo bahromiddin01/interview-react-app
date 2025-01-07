@@ -15,11 +15,11 @@ export default function InterviewBookingModal({ modalRef }) {
     const [selectedInterviewer, setSelectedInterviewer] = useState('');
 
     const interviewerData = [
-        { img: logoFaang, name: 'faang', title: 'FAANG Interviewer' },
-        { img: logoFacebook, name: 'facebook', title: 'Meta (Facebook) Interviewer' },
-        { img: logoGoogle, name: 'google', title: 'Google Interviewer' },
-        { img: logoMicrosoft, name: 'microsoft', title: 'Microsoft Interviewer' },
-        { img: logoApple, name: 'apple', title: 'Apple Interviewer' },
+        { img: logoFaang, name: 'FAANG Interviewer', title: 'FAANG Interviewer' },
+        { img: logoFacebook, name: 'Facebook Interviewer', title: 'Meta (Facebook) Interviewer' },
+        { img: logoGoogle, name: 'Google Interviewer', title: 'Google Interviewer' },
+        { img: logoMicrosoft, name: 'Microsoft Interviewer', title: 'Microsoft Interviewer' },
+        { img: logoApple, name: 'Apple Interviewer', title: 'Apple Interviewer' },
     ];
 
     const handleFocusChange = value => {
@@ -45,8 +45,8 @@ export default function InterviewBookingModal({ modalRef }) {
                             name="interviewFocus"
                             className="border-gray-300 shadow-sm px-3 py-2 border rounded-lg w-full outline-none">
                             <option value="" disabled>Select</option>
-                            <option value="algorithmsAndDataStructures">Algorithms and Data Structures</option>
-                            <option value="systemsDesign">Systems Design</option>
+                            <option value="Algorithms and data structures">Algorithms and Data Structures</option>
+                            <option value="Systems design">Systems Design</option>
                         </select>
                     </div>
                     <div className="flex flex-col gap-2">

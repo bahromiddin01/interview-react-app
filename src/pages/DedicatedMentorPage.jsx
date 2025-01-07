@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../assets/images/logo.svg'
 import { supabase } from '../supabase/supabase'
-import { InlineWidget } from 'react-calendly'
 import { toast } from 'react-toastify'
+import InterviewBookingModal from '../components/InterviewBookingModal'
+import { BookingContext } from '../context/BookingContext'
 
 export default function DedicatedMentorPage() {
 
     const navigate = useNavigate()
+
+    const { interviewFocus, interviewType } = useContext(BookingContext)
 
     const modalRef = useRef()
     const buttonRef = useRef()
@@ -37,8 +40,10 @@ export default function DedicatedMentorPage() {
                     .from('InterviewBooking')
                     .insert([
                         {
+                            interview_focus: interviewFocus,
+                            interviewer: interviewType,
                             calendar_time: scheduledTime.resource.start_time,
-                            type: 'mentor',
+                            type: 'Mentorship session',
                         }
                     ])
                 setTimeout(() => {
@@ -58,7 +63,7 @@ export default function DedicatedMentorPage() {
         return () => {
             window.removeEventListener('message', handleEventScheduled)
         }
-    }, [])
+    }, [interviewFocus, interviewType])
 
     return (
         <div>
@@ -128,13 +133,8 @@ export default function DedicatedMentorPage() {
                     </div>
                 </div>
             </div>
-            <div className={`fixed inset-0 justify-center items-center bg-black bg-opacity-50 ${isOpen ? 'flex' : 'hidden'}`}>
-                <div ref={modalRef} className='bg-white shadow-lg p-6 rounded-lg w-full max-w-4xl h-[600px]'>
-                    <InlineWidget
-                        url="https://calendly.com/bahromiddinabduqaxxorov1604/interview-pro"
-                        styles={{ width: '100%', height: '100%' }}
-                    />
-                </div>
+            <div className={`${isOpen ? '' : 'hidden'}`}>
+                <InterviewBookingModal modalRef={modalRef} />
             </div>
         </div>
     )

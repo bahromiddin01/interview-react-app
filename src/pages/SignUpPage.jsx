@@ -129,7 +129,7 @@ export default function SignUpPage() {
                 </div>
                 <div className='flex justify-between gap-4'>
                     <p className='font-inter font-normal text-darkGray text-sm'> Interviewpro 2024</p>
-                    <a href="$" className='font-inter font-normal text-darkGray text-sm'>help@interviewpro.com</a>
+                    <p href="$" className='font-inter font-normal text-darkGray text-sm'>help@interviewpro.com</p>
                 </div>
             </div>
             <div className='lg:block relative hidden w-[1100px] h-screen'>
