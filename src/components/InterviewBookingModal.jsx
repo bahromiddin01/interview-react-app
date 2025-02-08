@@ -7,7 +7,7 @@ import googleLogo from '../assets/images/googleIcon.svg'
 import microsoftLogo from '../assets/images/microsoftIcon.svg'
 import appleLogo from '../assets/images/appleIcon.svg'
 
-export default function BookingModal({ setIsOpen, modalRef, interviewType, fetchBookingData }) {
+export default function InterviewBookingModal({ setIsOpen, modalRef, fetchBookingData, setSuccess }) {
 
     const [interviewFocus, setInterviewFocus] = useState('')
     const [interviewer, setInterviewer] = useState('')
@@ -41,13 +41,14 @@ export default function BookingModal({ setIsOpen, modalRef, interviewType, fetch
                             interview_focus: interviewFocus,
                             interviewer: interviewer,
                             calendar_time: scheduledTime.resource.start_time,
-                            type: interviewType,
+                            type: 'Mock interview',
                             user_id: userId
                         }
                     ])
 
                 setTimeout(() => {
                     setIsOpen(false)
+                    setSuccess(true)
                     fetchBookingData()
                 }, 1000)
             }
@@ -56,7 +57,6 @@ export default function BookingModal({ setIsOpen, modalRef, interviewType, fetch
         const fetchUser = async () => {
             const { data } = await supabase.auth.getUser()
             setUserId(data.user?.id)
-            console.log(data)
         }
 
         fetchUser()
@@ -66,7 +66,7 @@ export default function BookingModal({ setIsOpen, modalRef, interviewType, fetch
         return () => {
             window.removeEventListener('message', handleEventScheduled)
         }
-    }, [interviewFocus, interviewer, setIsOpen, userId, interviewType, fetchBookingData])
+    })
 
     return (
         <div className='fixed inset-0 flex justify-center items-center bg-black bg-opacity-50'>

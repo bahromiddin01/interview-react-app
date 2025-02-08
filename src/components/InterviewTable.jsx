@@ -6,6 +6,7 @@ import logoFacebook from '../assets/images/logoFacebook.svg';
 import logoMicrosoft from '../assets/images/microsoftIcon.svg';
 
 export default function InterviewTable({ bookingData }) {
+    
     const interviewerImages = {
         'FAANg Interviewer': logoFaang,
         'Facebook Interviewer': logoFacebook,
@@ -16,6 +17,12 @@ export default function InterviewTable({ bookingData }) {
 
     return (
         <div className='flex flex-col'>
+            <div className='top-0 z-50 sticky flex bg-white px-6 py-3 border-b rounded-t-xl'>
+                <h5 className='w-80 font-inter font-medium text-darkGray text-xs'>Interview</h5>
+                <h5 className='w-72 font-inter font-medium text-darkGray text-xs'>Focus</h5>
+                <h5 className='w-36 font-inter font-medium text-darkGray text-xs'>Date</h5>
+                <h5 className='w-28 font-inter font-medium text-darkGray text-xs'>Status</h5>
+            </div>
             {bookingData.map((data, index) => (
                 <div key={index} className='flex items-center px-6 py-4 border-b'>
                     <div className='flex items-center gap-3 w-80'>

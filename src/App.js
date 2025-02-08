@@ -15,8 +15,8 @@ export default function App() {
 
   return (
     <>
-      <BookingProvider>
-        <UserProvider>
+      <UserProvider>
+        <BookingProvider>
           <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <Routes>
               <Route path='/' element={<HomePage />} />
@@ -34,8 +34,9 @@ export default function App() {
             closeButton={false}
             limit={1}
           />
-        </UserProvider>
-      </BookingProvider>
+        </BookingProvider>
+      </UserProvider>
+
     </>
   );
 }

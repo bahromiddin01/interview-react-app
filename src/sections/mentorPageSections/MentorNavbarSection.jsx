@@ -1,13 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import logo from '../../assets/images/logo.svg'
+import { supabase } from '../../supabase/supabase'
 
-export default function MentorNavbarSection({ isOpen }) {
+export default function MentorNavbarSection({ isOpen, success }) {
 
     const navigate = useNavigate()
 
+    const handleLogOut = async () => {
+        await supabase.auth.signOut()
+        navigate('/')
+    }
+
     return (
-        <div className={`flex flex-col flex-none justify-between bg-white px-6 py-8 w-[312px] h-screen ${isOpen ? 'blur-[1px]' : ''}`}>
+        <div className={`flex flex-col flex-none justify-between bg-white px-6 py-8 w-[312px] h-screen ${isOpen || success ? 'blur-[1px]' : ''}`}>
             <div className='flex flex-col gap-8'>
                 <div className='flex items-center gap-2'>
                     <img src={logo} alt="LogoImage" />
@@ -29,7 +35,7 @@ export default function MentorNavbarSection({ isOpen }) {
                 </div>
             </div>
 
-            <button className='flex items-center gap-2 hover:bg-green-50 px-3 py-2 rounded-md w-full transition-all duration-200 ease-in-out'>
+            <button onClick={handleLogOut} className='flex items-center gap-2 hover:bg-green-50 px-3 py-2 rounded-md w-full transition-all duration-200 ease-in-out'>
                 <i className="fa-right-from-bracket text-gray-500 text-lg fa-solid"></i>
                 <p className='font-inter font-semibold text-base'>Log out</p>
             </button>

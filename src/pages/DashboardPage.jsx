@@ -1,26 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../context/UserContext'
+import React, { useState } from 'react'
+import Layout from '../components/Layout'
 import DashboardMainSection from '../sections/dashboardPageSections/DashboardMainSection'
 import DashboardNavbarSection from '../sections/dashboardPageSections/DashboardNavbarSection'
-import { supabase } from '../supabase/supabase'
 
 export default function DashboardPage() {
     const [isOpen, setIsOpen] = useState(false)
-    const { setUser } = useContext(UserContext)
-
-    useEffect(() => {
-        const init = async () => {
-            const { data } = await supabase.auth.getUser()
-            setUser(data.user)
-        }
-
-        init()
-    }, [])
+    const [success, setSuccess] = useState(false)
 
     return (
-        <div className='flex'>
-            <DashboardNavbarSection isOpen={isOpen} />
-            <DashboardMainSection isOpen={isOpen} setIsOpen={setIsOpen} />
-        </div>
+        <Layout>
+            <div className='flex'>
+                <DashboardNavbarSection success={success} isOpen={isOpen} />
+                <DashboardMainSection success={success} setSuccess={setSuccess} isOpen={isOpen} setIsOpen={setIsOpen} />
+            </div>
+        </Layout>
     )
 }

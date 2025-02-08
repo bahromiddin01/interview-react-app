@@ -19,11 +19,11 @@ export default function HeaderLogoContainer() {
     const logoList = [...logosData, ...logosData]
 
     return (
-        <div className='flex lg:flex-row flex-col items-center gap-4 md:gap-6 lg:gap-16 xl:gap-32 lg:mx-12 xl:mx-24 px-4 border-y border-y-gray-300'>
+        <div className='flex lg:flex-row flex-col items-center gap-4 md:gap-6 lg:gap-16 xl:gap-32 border-y border-y-gray-300 lg:mx-12 xl:mx-24 px-4'>
 
-            <h4 className='text-sm md:text-xl font-medium font-roboto whitespace-nowrap'>Experts from the top tech companies</h4>
+            <h4 className='font-medium font-roboto text-sm md:text-xl whitespace-nowrap'>Experts from the top tech companies</h4>
 
-            <div className='flex overflow-hidden whitespace-nowrap relative logos'>
+            <div className='relative flex whitespace-nowrap overflow-hidden logos'>
                 <div className='flex gap-8 md:gap-16 py-3 md:py-4 lg:py-6 logoSlide'>
                     {logoList.map((image, index) => <HeaderBrandLogos imageSrc={image.src} imageAlt={image.alt} key={index} />)}
                 </div>

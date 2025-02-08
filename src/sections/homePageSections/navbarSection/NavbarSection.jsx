@@ -2,48 +2,44 @@ import { linksData } from './NavbarLinksData'
 import NavbarLinks from './NavbarLinks'
 import logo from '../../../assets/images/logo.svg'
 import PrimaryButton from '../../../components/PrimaryButton'
-import { useState, useEffect } from 'react'
+import { useState, useContext, useEffect, useRef } from 'react'
 import NavbarModal from './NavbarModal'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../../supabase/supabase'
+import { UserContext } from '../../../context/UserContext'
 
 export default function NavbarSection() {
 
     const [isOpen, setIsOpen] = useState(false)
-    const [userName, setUserName] = useState('')
-    const [isUser, setIsUser] = useState(false)
     const [showButtons, setShowButtons] = useState(false)
-
+    const { setUser, user } = useContext(UserContext)
+    const modalRef = useRef(null)
     const navigate = useNavigate()
+
+    const handleLogOut = async () => {
+        await supabase.auth.signOut()
+        window.location.reload()
+        navigate('/')
+    }
 
     useEffect(() => {
 
         const fetchUser = async () => {
             const { data } = await supabase.auth.getUser()
-
-            if (data.user) {
-                setUserName(data.user.user_metadata.name)
-                setIsUser(true)
-            }
+            setUser(data.user)
         }
 
         fetchUser()
-    }, [])
 
-    const handleLogOut = async e => {
-        try {
-            const { error } = await supabase.auth.signOut()
-
-            if (error) {
-                console.error('Error:', error.message)
-            } else {
-                navigate('/')
-                window.location.reload()
+        window.addEventListener('click', e => {
+            if (modalRef.current) {
+                if (!modalRef.current.contains(e.target)) {
+                    setShowButtons(false)
+                }
             }
-        } catch (error) {
-            console.error('Error:', error.message)
-        }
-    }
+        })
+
+    }, [])
 
     return (
         <div className='lg:relative top-0 z-50 sticky bg-white lg:bg-customCream'>
@@ -58,15 +54,15 @@ export default function NavbarSection() {
                             {isOpen ? <i className='fa-solid fa-xmark'></i> : <i className='fa-bars fa-solid'></i>}
                         </button>
                         <div className='lg:flex gap-6 hidden'>
-                            {linksData.map((data) => <NavbarLinks linkHref={data.href} linkName={data.name} key={data.id} style={`text-base font-medium font-inter hover:text-green-700`} />)}
+                            {linksData.map((data) => <NavbarLinks onClick={() => setIsOpen(false)} linkHref={data.href} linkName={data.name} key={data.id} style={`text-base font-medium font-inter hover:text-green-700`} />)}
                         </div>
                     </div>
-                    {isUser
+                    {user
                         ?
-                        <div className='relative flex flex-col items-center gap-2'>
+                        <div ref={modalRef} className='relative flex flex-col items-center gap-2'>
                             <button onClick={() => setShowButtons(!showButtons)} className='flex items-center gap-4 hover:bg-gray-300 px-4 py-3 rounded-xl transform transition duration-75 active:scale-90'>
                                 <i className="text-xl fa-solid fa-user"></i>
-                                <h3 className='font-light font-roboto text-xl'>{userName}</h3>
+                                <h3 className='font-light font-roboto text-xl'>{user.user_metadata.name}</h3>
                             </button>
                             <div className={`${showButtons ? 'flex' : 'hidden'} duration-200 flex-col gap-2 absolute top-16 w-48 py-2 px-2 bg-white border rounded-xl shadow-lg`}>
                                 <button onClick={() => navigate('/dashboard')} className='border-gray-200 bg-white hover:bg-gray-200 shadow-sm px-4 py-3 border rounded-xl font-inter font-light text-left transform transition duration-100 active:scale-90'>Dashboard</button>

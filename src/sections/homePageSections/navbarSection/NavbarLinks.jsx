@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function NavbarLinks({ linkHref, linkName, style }) {
+export default function NavbarLinks({ linkHref, linkName, style, onClick }) {
 
     return (
-        <a className={`${style}`} href={linkHref}>{linkName}</a>
+        <a onClick={onClick} className={`${style}`} href={linkHref}>{linkName}</a>
     )
 }
